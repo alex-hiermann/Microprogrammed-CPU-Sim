@@ -1,5 +1,8 @@
 package cpu_sim.bus;
 
+/**
+ * @author Alex Hiermann
+ */
 public abstract class SystemBus {
 
     private String type;
