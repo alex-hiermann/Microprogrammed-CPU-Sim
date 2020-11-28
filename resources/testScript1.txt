@@ -1,0 +1,10 @@
+	jmp start;
+	
+x:	db80h	;
+	db 44h	;
+	
+start:	lda x+1	;
+	mov B,A	;
+	add B	;
+	sta x	;
+	hlt	;

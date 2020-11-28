@@ -8,7 +8,7 @@ public class Memory {
     /**
      * size of the memory in bit
      */
-    private int size = 536870912; //64 Mebibyte -> 2^29
+    private final int size = 536870912; //64 Mebibyte -> 2^29
 
     /**
      * memory itself as a boolean array
