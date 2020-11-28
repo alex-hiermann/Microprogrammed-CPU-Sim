@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -120,12 +120,29 @@ public class Main extends Application {
 
         menuBar.getMenus().addAll(menu1, menu2, menu3);
         //why VBox and not HBox: a VBox uses you the whole content on the top like a nav header
-        VBox vBox = new VBox(menuBar);
-        SubScene subScene = new SubScene(vBox, Screen.getPrimary().getBounds().getWidth(), 24);
+        Image buttonImage = new Image("/buttonImages/stop.png");
+        ImageView buttonImageView = new ImageView(buttonImage);
+        Button stop = new Button();
+        stop.setGraphic(buttonImageView);
 
+        buttonImage = new Image("/buttonImages/debug.png");
+        buttonImageView = new ImageView(buttonImage);
+        Button debug = new Button();
+        debug.setGraphic(buttonImageView);
 
+        buttonImage = new Image("/buttonImages/start.png");
+        buttonImageView = new ImageView(buttonImage);
+        Button start = new Button();
+        start.setGraphic(buttonImageView);
 
-        //main screen
+        HBox hBoxButtons = new HBox(stop, debug, start);
+
+        Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+
+        HBox header = new HBox(menuBar, region, hBoxButtons);
+        SubScene subScene = new SubScene(header, Screen.getPrimary().getBounds().getWidth(), 24);
+
 
         //splitPane for the "main screen"
         SplitPane splitPane = new SplitPane(flowPane, textArea);
