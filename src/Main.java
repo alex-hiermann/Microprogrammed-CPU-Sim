@@ -2,13 +2,10 @@ import cpu_sim.Memory;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -55,6 +52,9 @@ public class Main extends Application {
         textArea.setStyle("-fx-font-size: 14");
         textArea.setPromptText("Write you code here");
 
+        FlowPane flowPane = new FlowPane();
+        flowPane.setPadding(new Insets(4, 0, 0, 5));
+
         //menu for the top of the window
         MenuBar menuBar = new MenuBar();
 
@@ -75,6 +75,7 @@ public class Main extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            flowPane.getChildren().add(new Label(file.getAbsolutePath()));
         });
 
         MenuItem save = new Menu("Save");
@@ -123,9 +124,11 @@ public class Main extends Application {
         SubScene subScene = new SubScene(vBox, Screen.getPrimary().getBounds().getWidth(), 24);
 
 
+
         //main screen
+
         //splitPane for the "main screen"
-        SplitPane splitPane = new SplitPane(new FlowPane(), textArea);
+        SplitPane splitPane = new SplitPane(flowPane, textArea);
         splitPane.setDividerPositions(0.2);
         SubScene subScene1 = new SubScene(splitPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight() - 200);
 
