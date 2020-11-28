@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -63,9 +64,17 @@ public class Main extends Application {
         open.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Script");
-            fileChooser.showOpenDialog(primaryStage);
+            File file = fileChooser.showOpenDialog(primaryStage);
 
-
+            textArea.clear();
+            try (BufferedReader in = Files.newBufferedReader(Paths.get(file.getAbsolutePath()))) {
+                String line;
+                while ((line = in.readLine()) != null) {
+                    textArea.appendText(line + "\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         MenuItem save = new Menu("Save");
