@@ -1,0 +1,16 @@
+Hiermann	Alexander
+    Projektname
+        Mikroprogrammierte CPU mit grafischer Ausgabe in JavaFX
+    Kurzbeschreibung
+        OK, im ersten Schritt braucht es nur die Ausführung eines Mikrocodes enthalten
+    Funktionsumfang
+        Bitte genau auflisten, was genau gemacht werden sollte. "So viele wie möglich" ist untechnisch
+    Screenshots
+        Bitte etwas detaillierter darstellen. Anstelle der Linien konkrete Werte.
+    Benötigte Ressourcen
+        Bei Programmier-Know-How ist nur das Know-How anzuführen, das du dir zusätzlich aneignen musst
+        Einlesen eines Files bitte etwas genauer beschreiben. Welches Format? Sonst OK.
+    Schwierigkeitsgrad
+        Mittel (ohne mikroprogrammierte Befehle)
+        Schwer (mit mikroprogrammierten Befehlen)
+    Sonstige Anmerkungen
