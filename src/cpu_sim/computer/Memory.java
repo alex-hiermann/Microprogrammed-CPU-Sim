@@ -1,4 +1,4 @@
-package cpu_sim;
+package cpu_sim.computer;
 
 /**
  * @author Alex Hiermann

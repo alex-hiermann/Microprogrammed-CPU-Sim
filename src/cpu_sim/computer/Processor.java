@@ -1,4 +1,4 @@
-package cpu_sim;
+package cpu_sim.computer;
 
 import cpu_sim.register.Register;
 

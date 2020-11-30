@@ -3,7 +3,7 @@
 x:	db80h	;
 	db 44h	;
 	
-start:	lda x+1	;
+start:	lda x+1;
 	mov B,A	;
 	add B	;
 	sta x	;
