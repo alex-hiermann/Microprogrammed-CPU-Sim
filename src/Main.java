@@ -1,3 +1,4 @@
+import cpu_sim.Program;
 import cpu_sim.Script;
 import cpu_sim.computer.Memory;
 
@@ -20,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -36,18 +36,21 @@ public class Main extends Application {
     //stores the hyperlinks to compare with, so that they don't duplicate
     Set<String> hyperLinks = new HashSet<>();
 
+    //the program to execute your code
+    Program program = new Program();
+
     public static void main(String[] args) {
-        //first test with memory write and read
-        Memory C = new Memory();
-        C.setMemory(10, new boolean[]{true, false, false, true, false});
-        System.out.println(C.getMemory(10, 5));
-
-        //testing the convert function from both file to script and also textArea to script
-        Script script1 = convertToScript(Path.of("C:/Users/mrale/Downloads/Burger.txt"), new TextArea(), true);
-        System.out.println(script1.toString());
-
-        Script script2 = convertToScript(Path.of(""), new TextArea("Was sollte in einem Skript stehen? Code."), false);
-        System.out.println(script2.toString());
+//        //first test with memory write and read
+//        Memory C = new Memory();
+//        C.setMemory(10, new boolean[]{true, false, false, true, false});
+//        System.out.println(C.getMemory(10, 5));
+//
+//        //testing the convert function from both file to script and also textArea to script
+//        Script script1 = convertToScript(Path.of("C:/Users/mrale/IdeaProjects/Microprogrammed_CPU/resources/testFiles/testFile3.txt"), new TextArea(), true);
+//        System.out.println(script1.toString());
+//
+//        Script script2 = convertToScript(Path.of(""), new TextArea("Was sollte in einem Skript stehen? Code."), false);
+//        System.out.println(script2.toString());
 
         launch(args);
     }
@@ -139,7 +142,12 @@ public class Main extends Application {
         buttonImageView = new ImageView(buttonImage);
         Button start = new Button();
         start.setGraphic(buttonImageView);
+        start.setOnAction(actionEvent -> {
+            program.setScript(convertToScript(Path.of(""), textArea, false));
+            program.run();
+        });
 
+        //header nav bar
         HBox hBoxButtons = new HBox(stop, debug, start);
         Region region = new Region();
 
