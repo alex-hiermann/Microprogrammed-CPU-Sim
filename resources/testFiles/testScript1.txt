@@ -8,6 +8,3 @@ start: load A, x+1;
 	add B	;
 	sta x	;
 	hlt	;
-
-
-regex: (\w*:((\s|\t)*)?)?(\w+)((\s|\t)*)?(\w*|\d*)([,+]?(\w*|\d*))+((\s|\t)*)?;$
