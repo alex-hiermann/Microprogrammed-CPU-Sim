@@ -8,9 +8,7 @@ public class Program {
 
     public void run() {
         if (!script.compile()) Program.stop("ERROR: There was an error while compiling your script.\nPlease check your syntax!");
-        else {
-            if (!script.execute()) Program.stop("ERROR: There was a runtime error while executing the script!");
-        }
+        else if (!script.execute()) Program.stop("ERROR: There was a runtime error while executing the script!");
     }
 
     public static void stop(String error) {

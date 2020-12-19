@@ -51,6 +51,9 @@ public class Main extends Application {
 //
 //        Script script2 = convertToScript(Path.of(""), new TextArea("Was sollte in einem Skript stehen? Code."), false);
 //        System.out.println(script2.toString());
+//
+//        Script script1 = convertToScript(Path.of("C:/Users/mrale/IdeaProjects/Microprogrammed_CPU/resources/testFiles/testFile1.txt"), new TextArea(), true);
+//        System.out.println(script1.compile());
 
         launch(args);
     }

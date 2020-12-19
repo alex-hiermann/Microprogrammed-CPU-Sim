@@ -1,8 +1,6 @@
 00:30 Pflichtenheft
-06:00 Erster Code-Tag (Grundlagen)
-06:30 Zweiter Code-Tag (Schwerpunkt auf Objektorientiertes Programmieren)
-04:00 Dritter Code-Tag (Schwerpunkt GUI)
-02:00 Vierter Code-Tag (Schwerpunkt GUI)
-03:00 Verteilt auf mehrere Tage (Schwerpunkt auf Program und Scripts - ersten compile Schritte)
+03:30 Grundaufbau
+13:00 Objektorientiertes Programmieren
+07:00 GUI
 ------
-21:00 Stunden geschätzer Aufwand
+21:00 Stunden geschätzer Aufwand für das gesamte Projekt

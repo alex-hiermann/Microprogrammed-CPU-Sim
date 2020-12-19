@@ -1,6 +1,6 @@
 package cpu_sim.command;
 
-public class Command {
+public abstract class Command {
 
     String name;
     String microCode;
@@ -10,4 +10,6 @@ public class Command {
         this.microCode = microCode;
     }
 
+    public void function() {
+    }
 }

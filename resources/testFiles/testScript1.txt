@@ -1,13 +1,13 @@
 	jmp start;
 	
-x:	db80h	;
+x:	db 80h	;
 	db 44h	;
 	
-start:	lda x+1;
+start: load A, x+1;
 	mov B,A	;
 	add B	;
 	sta x	;
 	hlt	;
 
 
-regex: (\w*:((\s|\t)*)?)?(\w+)((\s|\t)*)?(\w*|\d*)[,+]?(\w*|\d*)((\s|\t)*)?;
+regex: (\w*:((\s|\t)*)?)?(\w+)((\s|\t)*)?(\w*|\d*)([,+]?(\w*|\d*))+((\s|\t)*)?;$
