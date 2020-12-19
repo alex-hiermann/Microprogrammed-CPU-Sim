@@ -167,6 +167,13 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * @param stage the stage
+     * @param textArea the textarea itself (if it's not a file)
+     * @param flowPane the flowpane
+     * @param path path of the file (if it's a file)
+     * @param isFile true if it's a file, false if it's a textarea
+     */
     public void openFile(Stage stage, TextArea textArea, FlowPane flowPane, Path path, Boolean isFile) {
         Path filePath;
         if (!isFile) {
@@ -198,27 +205,12 @@ public class Main extends Application {
         }
     }
 
-    public static Script convertToScript(Path path, TextArea textArea, boolean isFile) {
-        StringBuilder input = new StringBuilder();
-
-        if (isFile) {
-            try (BufferedReader in = Files.newBufferedReader(path)) {
-                String line;
-                while ((line = in.readLine()) != null) {
-                    input.append(line).append("\n");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            ObservableList<CharSequence> paragraph = textArea.getParagraphs();
-            for (CharSequence seq : paragraph) {
-                input.append(seq).append("\n");
-            }
-        }
-        return new Script(input.toString());
-    }
-
+    /**
+     * @param primaryStage the stage
+     * @param textArea the textarea itself (if it's not a file)
+     * @param flowPane the flowpane
+     * @param path path of the file (if it's a file)
+     */
     public void quickOpenFile(Stage primaryStage, TextArea textArea, FlowPane flowPane, Path path) {
         Stage stage = new Stage();
         stage.setTitle("Quick-Open File");
@@ -247,5 +239,32 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * @param path path of the file (if it's a file)
+     * @param textArea the textarea itself (if it's not a file)
+     * @param isFile true if it's a file, false if it's a textarea
+     * @return the input of the file / textarea as a script
+     */
+    public static Script convertToScript(Path path, TextArea textArea, boolean isFile) {
+        StringBuilder input = new StringBuilder();
+
+        if (isFile) {
+            try (BufferedReader in = Files.newBufferedReader(path)) {
+                String line;
+                while ((line = in.readLine()) != null) {
+                    input.append(line).append("\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            ObservableList<CharSequence> paragraph = textArea.getParagraphs();
+            for (CharSequence seq : paragraph) {
+                input.append(seq).append("\n");
+            }
+        }
+        return new Script(input.toString());
     }
 }
