@@ -1,5 +1,7 @@
 package cpu_sim.computer;
 
+import java.util.Stack;
+
 /**
  * @author Alex Hiermann
  */
@@ -8,7 +10,9 @@ public class Memory {
     /**
      * size of the memory in bit
      */
-    private final int size = 536870912; //64 Mebibyte -> 2^29
+    private final int size = 536870912;
+
+    private Stack<Boolean> stack = new Stack<>();
 
     /**
      * memory itself as a boolean array
@@ -20,7 +24,8 @@ public class Memory {
      * size should not be changeable when initializing
      */
     public Memory() {
-        memory = new boolean[size];
+        stack.setSize(8388608); //1 boolean == 1 bit -> 1 MiB for Stack
+        memory = new boolean[size-stack.size()]; //(2^29 -> 64 MiB) - 1 MiB
     }
 
     /**

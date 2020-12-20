@@ -38,6 +38,7 @@ public class Main extends Application {
 
     //the program to execute your code
     Program program = new Program();
+    Memory memory = new Memory();
 
     public static void main(String[] args) {
 //        //first test with memory write and read
