@@ -23,10 +23,10 @@ public class Script {
 
     //unfinished!
     public boolean compile() {
-        for (int i = 0; i < input.split("\n").length; i++) {
-            Matcher matcher = Pattern.compile("(\\w*:((\\s|\\t)*)?)?(\\w+)((\\s|\\t)*)?(\\w*|\\d*) *[,]?(([+]? *(\\w*|\\d*))+((\\s|\\t)*)?);$").matcher(input.trim().split("\n")[i]);
+        for (int i = 0; i < input.replaceAll("\\n(\\t)?\\n","\n").split("\n").length; i++) {
+            Matcher matcher = Pattern.compile("(\\w*:((\\s|\\t)*)?)?(\\w+)((\\s|\\t)*)?(\\w*|\\d*) *[,]?(([+]? *(\\w*|\\d*))+((\\s|\\t)*)?);$").matcher(input.trim().replaceAll("\\n(\\t)?\\n","\n").split("\n")[i].trim());
 
-            if (!Pattern.compile("(\\w*:((\\s|\\t)*)?)?(\\w+)((\\s|\\t)*)?(\\w*|\\d*) *[,]?(([+]? *(\\w*|\\d*))+((\\s|\\t)*)?);$").matcher(input.trim().split("\n")[i]).find()) return false;
+            if (!Pattern.compile("(\\w*:((\\s|\\t)*)?)?(\\w+)((\\s|\\t)*)?(\\w*|\\d*) *[,]?(([+]? *(\\w*|\\d*))+((\\s|\\t)*)?);$").matcher(input.trim().replaceAll("\\n(\\t)?\\n","\n").split("\n")[i].trim()).find()) return false;
             while (matcher.find()) {
                 String command = matcher.group(4);
                 String op1 = matcher.group(7);

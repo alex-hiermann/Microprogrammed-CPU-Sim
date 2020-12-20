@@ -2,9 +2,9 @@
 	
 x:	db 80h	;
 	db 44h	;
-	
+
 start: load A, x+1;
 	mov B,A	;
 	add B	;
-	sta x	;
+	store A,x	;
 	hlt	;
