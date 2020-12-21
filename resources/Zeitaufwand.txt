@@ -1,6 +1,6 @@
-00:30 Pflichtenheft
+01:00 Pflichtenheft
 03:30 Grundaufbau
 26:00 Objektorientiertes Programmieren
 07:00 GUI
 ------
-34:00 Stunden geschätzer Aufwand für das gesamte Projekt
+34:30 Stunden geschätzer Aufwand für das gesamte Projekt

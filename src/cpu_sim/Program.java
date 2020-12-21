@@ -25,7 +25,8 @@ public class Program {
 
     public static void stop(String error, boolean successful) {
         if (successful) {
-            System.out.println(App.memory.getMemory(4232, 32));
+            System.out.println("#4200 | " + App.memory.getMemory(4200, 32) + " | int value: " + Integer.parseInt(App.memory.getMemory(4200, 32), 2));
+            System.out.println("#4232 | " + App.memory.getMemory(4232, 32) + " | int value: " + Integer.parseInt(App.memory.getMemory(4232, 32), 2));
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
