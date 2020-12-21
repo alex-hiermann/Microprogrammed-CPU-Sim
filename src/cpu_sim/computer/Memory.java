@@ -90,6 +90,18 @@ public class Memory {
     }
 
     /**
+     * useful to convert a binary string into a boolean array
+     *
+     * @param binaryString a string with only binary digits
+     * @return the binary string as a boolean array
+     */
+    public static boolean[] convertBSToBoolAr(String binaryString) {
+        boolean[] boolArr = new boolean[binaryString.length()];
+        for (int i = 0; i < binaryString.length(); i++) boolArr[i] = binaryString.charAt(i) == '1';
+        return boolArr;
+    }
+
+    /**
      * useful to convert a boolean (true/false) to int (1/0)
      *
      * @param bool a boolean value
@@ -100,14 +112,13 @@ public class Memory {
     }
 
     /**
-     * string to binary int
-     * converts a binary string to a binary int
+     * converts a string to a binary string
      *
      * @param s a binary string
-     * @return a binary int
+     * @return a binary string
      */
-    public static int stbi(String s) {
-        return Integer.parseInt(s, 2);
+    public static String stbi(String s) {
+        return Integer.toBinaryString(Integer.parseInt(s));
     }
 
     /**

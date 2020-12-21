@@ -1,8 +1,7 @@
 package cpu_sim.command;
 
-public abstract class JmpCondition extends Command {
-
-    public JmpCondition(String name, String microCode) {
+public class JmpGe extends JmpCondition{
+    public JmpGe(String name, String microCode) {
         super(name, microCode);
     }
 

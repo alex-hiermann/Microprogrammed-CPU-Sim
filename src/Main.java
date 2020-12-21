@@ -1,7 +1,11 @@
 import cpu_sim.Program;
 import cpu_sim.Script;
+import cpu_sim.bus.AddressBus;
+import cpu_sim.bus.ControlBus;
+import cpu_sim.bus.DataBus;
 import cpu_sim.computer.Memory;
 
+import cpu_sim.computer.Processor;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -36,9 +40,16 @@ public class Main extends Application {
     //stores the hyperlinks to compare with, so that they don't duplicate
     Set<String> hyperLinks = new HashSet<>();
 
-    //the program to execute your code
-    Program program = new Program();
+    //the memory to save some of your executions
     Memory memory = new Memory();
+    //the program to execute your code
+    Program program = new Program(memory);
+    //the processor to execute the own commands
+    Processor processor = new Processor("8085", "3.072 MHz", 4,8);
+    //the buses to transfer the data: Processor <-> Program <-> Memory
+    AddressBus addressBus = new AddressBus("addressBus");
+    DataBus dataBus = new DataBus("dataBus");
+    ControlBus controlBus = new ControlBus("controlBus");
 
     public static void main(String[] args) {
 //        //first test with memory write and read

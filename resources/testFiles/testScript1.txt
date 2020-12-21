@@ -5,6 +5,7 @@ x:	db 80h	;
 
 start: load A, x+1;
 	mov B,A	;
+	mov D,C	;
 	add B	;
 	store A,x	;
 	hlt	;

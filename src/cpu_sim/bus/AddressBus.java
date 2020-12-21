@@ -5,7 +5,17 @@ package cpu_sim.bus;
  */
 public class AddressBus extends SystemBus{
 
-    public AddressBus(String type, short bus16bit) {
-        super(type, bus16bit);
+    public AddressBus(String type) {
+        super(type);
+    }
+
+    @Override
+    public short getBus32bit() {
+        return super.getBus32bit();
+    }
+
+    @Override
+    public void setBus32bit(short bus16bit) {
+        super.setBus32bit(bus16bit);
     }
 }
