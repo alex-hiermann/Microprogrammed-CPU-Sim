@@ -6,8 +6,8 @@ package cpu_sim.bus;
 public abstract class SystemBus {
 
     private String type;
-    private short bus32bit;
-    private byte bus16bit;
+    private int bus32bit;
+    private short bus16bit;
 
     public SystemBus(String type) {
         this.type = type;
@@ -23,19 +23,19 @@ public abstract class SystemBus {
         this.type = type;
     }
 
-    public short getBus32bit() {
+    public int getBus32bit() {
         return bus32bit;
     }
 
-    public void setBus32bit(short bus16bit) {
-        this.bus32bit = bus16bit;
+    public void setBus32bit(int bus32bit) {
+        this.bus32bit = bus32bit;
     }
 
-    public byte getBus16bit() {
+    public short getBus16bit() {
         return bus16bit;
     }
 
-    public void setBus16bit(byte bus16bit) {
+    public void setBus16bit(short bus16bit) {
         this.bus16bit = bus16bit;
     }
 }

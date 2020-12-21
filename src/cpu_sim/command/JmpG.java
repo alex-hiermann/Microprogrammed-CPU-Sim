@@ -1,9 +1,6 @@
 package cpu_sim.command;
 
 public class JmpG extends JmpCondition{
-    public JmpG(String name, String microCode) {
-        super(name, microCode);
-    }
 
     @Override
     public void function() {

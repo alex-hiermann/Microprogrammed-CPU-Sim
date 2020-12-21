@@ -1,13 +1,14 @@
 package cpu_sim.command;
 
+import cpu_sim.Program;
+
 public class Hlt extends Command{
 
-    public Hlt(String name, String microCode) {
-        super(name, microCode);
+    public Hlt() {
     }
 
     @Override
     public void function() {
-
+        Program.stop("", true);
     }
 }

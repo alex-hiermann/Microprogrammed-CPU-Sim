@@ -10,12 +10,12 @@ public class AddressBus extends SystemBus{
     }
 
     @Override
-    public short getBus32bit() {
+    public int getBus32bit() {
         return super.getBus32bit();
     }
 
     @Override
-    public void setBus32bit(short bus16bit) {
-        super.setBus32bit(bus16bit);
+    public void setBus32bit(int bus32bit) {
+        super.setBus32bit(bus32bit);
     }
 }

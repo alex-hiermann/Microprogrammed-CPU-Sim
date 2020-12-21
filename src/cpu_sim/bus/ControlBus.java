@@ -10,12 +10,12 @@ public class ControlBus extends SystemBus{
     }
 
     @Override
-    public byte getBus16bit() {
+    public short getBus16bit() {
         return super.getBus16bit();
     }
 
     @Override
-    public void setBus16bit(byte bus16bit) {
+    public void setBus16bit(short bus16bit) {
         super.setBus16bit(bus16bit);
     }
 }
