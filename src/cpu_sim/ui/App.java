@@ -1,3 +1,5 @@
+package cpu_sim.ui;
+
 import cpu_sim.Program;
 import cpu_sim.Script;
 import cpu_sim.bus.AddressBus;
@@ -32,7 +34,7 @@ import java.util.Set;
 /**
  * @author Alex Hiermann
  */
-public class Main extends Application {
+public class App extends Application {
 
     //for new warning when quick opening another file
     boolean showWarningAgain = true;
@@ -41,11 +43,11 @@ public class Main extends Application {
     Set<String> hyperLinks = new HashSet<>();
 
     //the memory to save some of your executions
-    Memory memory = new Memory();
+    public static Memory memory = new Memory();
     //the program to execute your code
-    Program program = new Program(memory);
+    Program program = new Program();
     //the processor to execute the own commands
-    Processor processor = new Processor("8085", "3.072 MHz", 4,8);
+    public static Processor processor = new Processor("8085", "3.072 MHz", 4,8);
     //the buses to transfer the data: Processor <-> Program <-> Memory
     AddressBus addressBus = new AddressBus("addressBus");
     DataBus dataBus = new DataBus("dataBus");

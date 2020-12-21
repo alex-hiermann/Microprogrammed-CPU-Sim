@@ -1,16 +1,13 @@
 package cpu_sim;
 
+
 import cpu_sim.computer.Memory;
+import cpu_sim.ui.App;
 import javafx.scene.control.Alert;
 
 public class Program {
 
     Script script = new Script();
-    Memory memory;
-
-    public Program(Memory memory) {
-        this.memory = memory;
-    }
 
     public void run() {
         if (!script.compile()) {
@@ -21,25 +18,24 @@ public class Program {
             Program.stop("ERROR: There was a fatal error while writing the script into the memory!", false);
             return;
         }
+        if (!startProcessor()) Program.stop("ERROR: There was a runtime error while executing the script!", false);
     }
 
     public static void stop(String error, boolean successful) {
         if (successful) return;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         if (error.isEmpty()) error = "Unknown error!";
-        alert.setTitle("ERROR in Script!");
+        alert.setTitle("ERROR!");
         alert.setContentText(error);
         alert.showAndWait();
     }
 
-    public static void executeCode() {
-
+    public static boolean startProcessor() {
+        return App.processor.executeCode();
     }
 
     public boolean writeMemory() {
-        memory.setMemory(0, Memory.convertBSToBoolAr(script.machineCode));
-        System.out.println(memory.getMemory(0, 320));
-        return true;
+        return App.memory.setMemory(0, Memory.convertBSToBoolAr(script.machineCode));
     }
 
     public void setScript(Script script) {

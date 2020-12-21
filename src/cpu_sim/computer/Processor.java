@@ -11,11 +11,16 @@ public class Processor {
     Register[][] registers;
     private int instructionPointer;
 
-    public Processor(String name, String frequency, int bus16, int bus8) {
+    public Processor(String name, String frequency, int register16, int register8) {
         this.name = name;
         this.frequency = frequency;
 
-        registers = new Register[][]{new Register16Bit[bus16], new Register8Bit[bus8]};
+        registers = new Register[][]{new Register16Bit[register16], new Register8Bit[register8]};
+    }
+
+    public boolean executeCode() {
+
+        return true;
     }
 
     public String getName() {
