@@ -22,7 +22,10 @@ public class Program {
     }
 
     public static void stop(String error, boolean successful) {
-        if (successful) return;
+        if (successful) {
+            System.out.println("DU HAST ES GESCHAFFT!!!!");
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.ERROR);
         if (error.isEmpty()) error = "Unknown error!";
         alert.setTitle("ERROR!");

@@ -1,8 +1,10 @@
 package cpu_sim.computer;
 
+import cpu_sim.command.Hlt;
 import cpu_sim.register.Register;
 import cpu_sim.register.Register16Bit;
 import cpu_sim.register.Register8Bit;
+import cpu_sim.ui.App;
 
 public class Processor {
 
@@ -19,6 +21,18 @@ public class Processor {
     }
 
     public boolean executeCode() {
+        String command = App.memory.getMemory(instructionPointer, 16);
+        String address = App.memory.getMemory(instructionPointer + 16, 32);
+        String data = App.memory.getMemory(instructionPointer + 48, 32);
+        instructionPointer += 80;
+
+        App.addressBus.setBus32bit(Integer.parseInt(Memory.stbi(address)));
+        App.dataBus.setBus16bit(Short.parseShort(Memory.stbi(data)));
+
+        switch (command) {
+            case "1111111111111111":
+                new Hlt().function();
+        }
 
         return true;
     }

@@ -45,13 +45,13 @@ public class App extends Application {
     //the memory to save some of your executions
     public static Memory memory = new Memory();
     //the program to execute your code
-    Program program = new Program();
+    public static Program program = new Program();
     //the processor to execute the own commands
     public static Processor processor = new Processor("8085", "3.072 MHz", 4,8);
     //the buses to transfer the data: Processor <-> Program <-> Memory
-    AddressBus addressBus = new AddressBus("addressBus");
-    DataBus dataBus = new DataBus("dataBus");
-    ControlBus controlBus = new ControlBus("controlBus");
+    public static AddressBus addressBus = new AddressBus("addressBus");
+    public static DataBus dataBus = new DataBus("dataBus");
+    public static ControlBus controlBus = new ControlBus("controlBus");
 
     public static void main(String[] args) {
 //        //first test with memory write and read
