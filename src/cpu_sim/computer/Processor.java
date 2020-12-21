@@ -1,5 +1,6 @@
 package cpu_sim.computer;
 
+import cpu_sim.command.Add;
 import cpu_sim.command.Hlt;
 import cpu_sim.register.Register;
 import cpu_sim.register.Register16Bit;
@@ -20,20 +21,20 @@ public class Processor {
         registers = new Register[][]{new Register16Bit[register16], new Register8Bit[register8]};
     }
 
-    public boolean executeCode() {
-        String command = App.memory.getMemory(instructionPointer, 16);
-        String address = App.memory.getMemory(instructionPointer + 16, 32);
-        String data = App.memory.getMemory(instructionPointer + 48, 32);
-        instructionPointer += 80;
+    public boolean executeCode(int commandCounter) {
+        for (instructionPointer = 0; instructionPointer < 80 * commandCounter; instructionPointer += 80) {
+            String command = App.memory.getMemory(instructionPointer, 16);
+            String address = App.memory.getMemory(instructionPointer + 16, 32);
+            String data = App.memory.getMemory(instructionPointer + 48, 32);
 
-        App.addressBus.setBus32bit(Integer.parseInt(Memory.stbi(address)));
-        App.dataBus.setBus16bit(Short.parseShort(Memory.stbi(data)));
+            App.addressBus.setBus32bit(Integer.parseInt(address, 2));
+            App.dataBus.setBus32bit(Integer.parseInt(data, 2));
 
-        switch (command) {
-            case "1111111111111111":
-                new Hlt().function();
+            switch (command) {
+                case "0000000000000001" -> new Add(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
+                case "1111111111111111" -> new Hlt().function();
+            }
         }
-
         return true;
     }
 

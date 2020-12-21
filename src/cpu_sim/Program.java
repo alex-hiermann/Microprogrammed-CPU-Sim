@@ -8,12 +8,14 @@ import javafx.scene.control.Alert;
 public class Program {
 
     Script script = new Script();
+    private static int commandCounter;
 
     public void run() {
         if (!script.compile()) {
             Program.stop("ERROR: There was an error while compiling your script.\nPlease check your syntax!", false);
             return;
         }
+        commandCounter = script.input.split("\n").length;
         if (!writeMemory()) {
             Program.stop("ERROR: There was a fatal error while writing the script into the memory!", false);
             return;
@@ -23,7 +25,7 @@ public class Program {
 
     public static void stop(String error, boolean successful) {
         if (successful) {
-            System.out.println("DU HAST ES GESCHAFFT!!!!");
+            System.out.println(App.memory.getMemory(4232, 32));
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -34,11 +36,11 @@ public class Program {
     }
 
     public static boolean startProcessor() {
-        return App.processor.executeCode();
+        return App.processor.executeCode(commandCounter);
     }
 
     public boolean writeMemory() {
-        return App.memory.setMemory(0, Memory.convertBSToBoolAr(script.machineCode));
+        return App.memory.setMemory(0, Memory.convertBSToBoolArr(script.machineCode));
     }
 
     public void setScript(Script script) {

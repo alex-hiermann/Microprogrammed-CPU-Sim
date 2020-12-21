@@ -60,7 +60,7 @@ public class Memory {
      *
      * @param start start position for the range you want to read
      * @param range the range of the memory you want to read
-     * @return a range of your memory
+     * @return a range of your memory in binary
      */
     public String getMemory(int start, int range) {
         StringBuilder values = new StringBuilder();
@@ -95,7 +95,7 @@ public class Memory {
      * @param binaryString a string with only binary digits
      * @return the binary string as a boolean array
      */
-    public static boolean[] convertBSToBoolAr(String binaryString) {
+    public static boolean[] convertBSToBoolArr(String binaryString) {
         boolean[] boolArr = new boolean[binaryString.length()];
         for (int i = 0; i < binaryString.length(); i++) boolArr[i] = binaryString.charAt(i) == '1';
         return boolArr;
