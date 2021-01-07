@@ -4,24 +4,37 @@ package cpu_sim.command;
 import cpu_sim.computer.Memory;
 import cpu_sim.ui.App;
 
+/**
+ * @author Alex Hiermann
+ */
 public class Add extends Command {
 
-    private int op1;
-    private int op2;
+    /**
+     * first needed operator
+     */
+    private final int op1;
+    /**
+     * second needed operator
+     */
+    private final int op2;
 
+    /**
+     * default constructor
+     *
+     * @param op1 first needed operator
+     * @param op2 second needed operator
+     */
     public Add(int op1, int op2) {
         this.op1 = op1;
         this.op2 = op2;
     }
 
+    /**
+     * adds (op1 / number in memory at index op1) to (op2 / number in memory at index op2) and saves the result at op2
+     */
     @Override
     public void function() {
-        String bin = Integer.toBinaryString(Integer.parseInt(App.memory.getMemory(op1, 32), 2) + op2);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.insert(0, "00000000000000000000000000000000");
-        String s = stringBuilder.substring(0, 32 - bin.length()) + bin;
-
-        App.memory.setMemory(op1, Memory.convertBSToBoolArr(s));
+        //System.out.println("op2 = " + op2);
+        App.memory.setMemory(op2, Memory.convertBSToBoolArr(Memory.length32(Integer.toBinaryString(op1 + Integer.parseInt(App.memory.getMemory(op2, 32), 2)))));
     }
 }

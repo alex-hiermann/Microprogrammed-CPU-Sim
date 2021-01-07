@@ -2,6 +2,7 @@ package cpu_sim;
 
 import cpu_sim.command.Command;
 import cpu_sim.computer.Memory;
+import cpu_sim.ui.App;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,11 +11,9 @@ import java.util.regex.Pattern;
 
 public class Script {
 
-    private boolean correctInput = false;
     public final String input;
     public String machineCode;
-    private Set<Command> commands = new HashSet<>();
-    private final String regex = "(\\w*:((\\s|\\t)*)?)?(\\w+)((\\s|\\t)*)?(\\w*|\\d*) *[,]?(([+]? *(\\w*|\\d*))+((\\s|\\t)*)?);$";
+    private final String regex = "(\\w*:((\\s|\\t)*)?)?(\\w+)((\\s|\\t)*)?(#?\\w*|#?\\d*) *[,]?(([+]? *(#?\\w*|#?\\d*))+((\\s|\\t)*)?);$";
 
     public Script() {
         input = "";
@@ -30,7 +29,6 @@ public class Script {
             if (!matcher.find()) return false;
             while (matcher.find()) {
                 String command = matcher.group(4);
-                System.out.print(command + "|");
                 String op1 = matcher.group(7);
                 String op2 = matcher.group(8);
                 if (op1.trim().equals("")) {
@@ -84,6 +82,7 @@ public class Script {
         return true;
     }
 
+    @SuppressWarnings("StringConcatenationInLoop")
     public void createMachineCode() {
         machineCode = "";
         for (int i = 0; i < input.replaceAll("\\n(\\t)?\\n", "\n").split("\n").length; i++) {
@@ -92,119 +91,72 @@ public class Script {
                 String command = matcher.group(4);
 
                 switch (command) {
-                    case "mov":
-                        break;
-
-                    case "lea":
-                        break;
-
-                    case "add":
-                        machineCode += "0000000000000001";
-                        break;
-
-                    case "sub":
-                        break;
-
-                    case "imul":
-                        break;
-
-                    case "idiv":
-                        break;
-
-                    case "and":
-                        break;
-
-                    case "or":
-                        break;
-
-                    case "xor":
-                        break;
-
-                    case "store":
-                        break;
-
-                    case "shl":
-                        break;
-
-                    case "shr":
-                        break;
-
-                    case "cmp":
-                        break;
-
-                    case "push":
-                        break;
-
-                    case "pop":
-                        break;
-
-                    case "inc":
-                        break;
-
-                    case "dec":
-                        break;
-
-                    case "not":
-                        break;
-
-                    case "neg":
-                        break;
-
-                    case "jmp":
-                        break;
-
-                    case "je":
-                        break;
-
-                    case "jne":
-                        break;
-
-                    case "jz":
-                        break;
-
-                    case "jg":
-                        break;
-
-                    case "jge":
-                        break;
-
-                    case "jl":
-                        break;
-
-                    case "jle":
-                        break;
-
-                    case "call":
-                        break;
-
-                    case "ret":
-                        break;
-
-                    case "hlt":
-                        machineCode += "1111111111111111";
-                        break;
+                    case "add" -> machineCode += "0000000000000001";
+                    case "and" -> machineCode += "0000000000000010";
+                    case "call" -> machineCode += "0000000000000011";
+                    case "cmp" -> machineCode += "0000000000000100";
+                    case "dec" -> machineCode += "0000000000000101";
+                    case "hlt" -> machineCode += "1111111111111111";
+                    case "idiv" -> machineCode += "0000000000000110";
+                    case "imul" -> machineCode += "0000000000000111";
+                    case "inc" -> machineCode += "0000000000001000";
+                    case "jmp" -> machineCode += "0000000000001001";
+                    case "je" -> machineCode += "0000000000001010";
+                    case "jg" -> machineCode += "0000000000001011";
+                    case "jge" -> machineCode += "0000000000001100";
+                    case "jl" -> machineCode += "0000000000001101";
+                    case "jle" -> machineCode += "0000000000001110";
+                    case "jne" -> machineCode += "0000000000001111";
+                    case "jz" -> machineCode += "0000000000010000";
+                    case "lea" -> machineCode += "0000000000010001";
+                    case "mov" -> machineCode += "0000000000010010";
+                    case "neg" -> machineCode += "0000000000010011";
+                    case "not" -> machineCode += "0000000000010100";
+                    case "or" -> machineCode += "0000000000010101";
+                    case "pop" -> machineCode += "0000000000010110";
+                    case "push" -> machineCode += "0000000000010111";
+                    case "ret" -> machineCode += "0000000000011000";
+                    case "shl" -> machineCode += "0000000000011001";
+                    case "shr" -> machineCode += "0000000000011010";
+                    case "store" -> machineCode += "0000000000011011";
+                    case "sub" -> machineCode += "0000000000011100";
+                    case "xor" -> machineCode += "0000000000011101";
                 }
                 String op1 = matcher.group(7).trim();
                 String op2 = matcher.group(8).trim();
 
-                if (isNumeric(op1)) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.insert(0, "00000000000000000000000000000000");
-                    machineCode += stringBuilder.substring(0, 32 - Memory.stbi(op1).length()) + Memory.stbi(op1);
-                } else machineCode += "00000000000000000000000000000000";
+                //convert op1 into machine code
+                OperatorToMachineCode(op1);
 
-                if (isNumeric(op2)) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.insert(0, "00000000000000000000000000000000");
-                    machineCode += stringBuilder.substring(0, 32 - Memory.stbi(op2).length()) + Memory.stbi(op2);
-                } else machineCode += "00000000000000000000000000000000";
+                //convert op2 into machine code
+                OperatorToMachineCode(op2);
             }
         }
     }
 
+    private void OperatorToMachineCode(String op) {
+        if (isNumeric(op)) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.insert(0, "00000000000000000000000000000000");
+            String s;
+            if (op.contains("#")) {
+                op = op.replace("#", "");
+                s = App.memory.getMemory(Integer.parseInt(op), 32);
+            }
+            else s = Memory.stbi(op);
+            machineCode += stringBuilder.substring(0, 32 - Memory.stbi(op).length()) + s;
+        } else machineCode += "00000000000000000000000000000000";
+    }
+
+    /**
+     * useful to check if a string only contains numbers
+     *
+     * @param s string
+     * @return if the string only contains numbers (true/false)
+     */
     public boolean isNumeric(String s) {
-        Pattern pattern = Pattern.compile("\\d+");
-        if (s == null) {
+        Pattern pattern = Pattern.compile("#?\\d+");
+        if (s == null || s.equalsIgnoreCase("")) {
             return false;
         }
         return pattern.matcher(s).matches();

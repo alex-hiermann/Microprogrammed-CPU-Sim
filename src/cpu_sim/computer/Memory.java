@@ -122,6 +122,17 @@ public class Memory {
     }
 
     /**
+     * turn a binary string with any length into a binary string filled up to a length 32 with zeros
+     *
+     * @return binary string with length 32
+     */
+    public static String length32(String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.insert(0, "00000000000000000000000000000000");
+        return stringBuilder.substring(0, 32 - s.length()) + s;
+    }
+
+    /**
      * @return memory
      */
     public boolean[] getMemory() {

@@ -15,12 +15,14 @@ public class Program {
             Program.stop("ERROR: There was an error while compiling your script.\nPlease check your syntax!", false);
             return;
         }
-        commandCounter = script.input.split("\n").length;
+        commandCounter = script.input.split(";").length;
         if (!writeMemory()) {
             Program.stop("ERROR: There was a fatal error while writing the script into the memory!", false);
             return;
         }
-        if (!startProcessor()) Program.stop("ERROR: There was a runtime error while executing the script!", false);
+        if (!startProcessor()) {
+            Program.stop("ERROR: There was a runtime error while executing the script!", false);
+        }
     }
 
     public static void stop(String error, boolean successful) {
