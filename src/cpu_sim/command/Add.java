@@ -30,7 +30,7 @@ public class Add extends Command {
     }
 
     /**
-     * adds (op1 / number in memory at index op1) to (op2 / number in memory at index op2) and saves the result at op2
+     * adds (op1) to (number in memory at index op2) and saves the result at op2
      */
     @Override
     public void function() {

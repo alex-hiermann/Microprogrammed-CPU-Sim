@@ -1,9 +1,6 @@
 package cpu_sim.computer;
 
-import cpu_sim.command.Add;
-import cpu_sim.command.And;
-import cpu_sim.command.Hlt;
-import cpu_sim.command.Sub;
+import cpu_sim.command.*;
 import cpu_sim.register.Register;
 import cpu_sim.register.Register16Bit;
 import cpu_sim.register.Register8Bit;
@@ -36,6 +33,8 @@ public class Processor {
             switch (command) {
                 case "0000000000000001" -> new Add(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
                 case "0000000000000010" -> new And(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
+                case "0000000000000101" -> new Dec(App.addressBus.getBus32bit()).function();
+                case "0000000000001000" -> new Inc(App.addressBus.getBus32bit()).function();
                 case "0000000000011100" -> new Sub(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
                 case "1111111111111111" -> new Hlt().function();
             }
