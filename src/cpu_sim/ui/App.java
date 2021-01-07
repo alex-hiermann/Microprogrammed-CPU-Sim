@@ -51,7 +51,7 @@ public class App extends Application {
     //the buses to transfer the data: Processor <-> Program <-> Memory
     public static AddressBus addressBus = new AddressBus("addressBus");
     public static DataBus dataBus = new DataBus("dataBus");
-    public static ControlBus controlBus = new ControlBus("controlBus");
+    //public static ControlBus controlBus = new ControlBus("controlBus");
 
     public static void main(String[] args) {
 //        //first test with memory write and read
@@ -81,7 +81,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         //basic and standard window config
         primaryStage.setTitle("CPU-Scripting");
-        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icon.png")));
+        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icon2.png")));
         primaryStage.setMaximized(true);
 
 
@@ -231,7 +231,7 @@ public class App extends Application {
     public void quickOpenFile(Stage primaryStage, TextArea textArea, FlowPane flowPane, Path path) {
         Stage stage = new Stage();
         stage.setTitle("Quick-Open File");
-        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icon.png")));
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icon2.png")));
         stage.setResizable(false);
         stage.setWidth(280);
         stage.setHeight(120);
