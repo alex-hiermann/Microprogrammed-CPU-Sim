@@ -34,7 +34,6 @@ public class Add extends Command {
      */
     @Override
     public void function() {
-        //System.out.println("op2 = " + op2);
         App.memory.setMemory(op2, Memory.convertBSToBoolArr(Memory.length32(Integer.toBinaryString(op1 + Integer.parseInt(App.memory.getMemory(op2, 32), 2)))));
     }
 }
