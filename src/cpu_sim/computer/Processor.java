@@ -34,6 +34,8 @@ public class Processor {
                 case "0000000000000001" -> new Add(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
                 case "0000000000000010" -> new And(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
                 case "0000000000000101" -> new Dec(App.addressBus.getBus32bit()).function();
+                case "0000000000000110" -> new Idiv(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
+                case "0000000000000111" -> new Imul(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
                 case "0000000000001000" -> new Inc(App.addressBus.getBus32bit()).function();
                 case "0000000000011100" -> new Sub(App.addressBus.getBus32bit(), App.dataBus.getBus32bit()).function();
                 case "1111111111111111" -> new Hlt().function();

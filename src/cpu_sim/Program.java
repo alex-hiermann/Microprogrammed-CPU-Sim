@@ -29,6 +29,8 @@ public class Program {
         if (successful) {
             System.out.println("#4200 | " + App.memory.getMemory(4200, 32) + " | int value: " + Integer.parseInt(App.memory.getMemory(4200, 32), 2));
             System.out.println("#4232 | " + App.memory.getMemory(4232, 32) + " | int value: " + Integer.parseInt(App.memory.getMemory(4232, 32), 2));
+            System.out.println("#4264 | " + App.memory.getMemory(4264, 32) + " | int value: " + Integer.parseInt(App.memory.getMemory(4264, 32), 2));
+            System.out.println("#4296 | " + App.memory.getMemory(4296, 32) + " | int value: " + Integer.parseInt(App.memory.getMemory(4296, 32), 2));
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);
