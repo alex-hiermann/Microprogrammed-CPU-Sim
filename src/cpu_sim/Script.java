@@ -1,28 +1,53 @@
 package cpu_sim;
 
-import cpu_sim.command.Command;
 import cpu_sim.computer.Memory;
 import cpu_sim.ui.App;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Alex Hiermann
+ */
 public class Script {
 
+    /**
+     * input of the script
+     * commands expected
+     */
     public final String input;
+
+    /**
+     * the commands converted into machine-micro-code
+     */
     public String machineCode;
+
+    /**
+     * the regex which is being used to check if the syntax is correctly used and no illegal arguments
+     */
     private final String regex = "(\\w*:((\\s|\\t)*)?)?(\\w+)((\\s|\\t)*)?(#?\\w*|#?\\d*) *[,]?(([+]? *(#?\\w*|#?\\d*))+((\\s|\\t)*)?);$";
 
+    /**
+     * default constructor
+     * no input source manually set -> set the input to nothing
+     */
     public Script() {
         input = "";
     }
 
+    /**
+     * advanced constructor
+     * set the input to the input of the manually given input source
+     *
+     * @param input is the input source for the script
+     */
     public Script(String input) {
         this.input = input;
     }
 
+    /**
+     * @return true/false if any errors occurred while compiling the script
+     */
     public boolean compile() {
         for (int i = 0; i < input.replaceAll("\\n(\\t)?\\n", "\n").split("\n").length; i++) {
             Matcher matcher = Pattern.compile(regex).matcher(input.trim().replaceAll("\\n(\\t)?\\n", "\n").split("\n")[i].trim());
@@ -82,6 +107,10 @@ public class Script {
         return true;
     }
 
+    /**
+     * convert the "normal" script into a machine-micro-code using script
+     * which is being used to let the processor execute the program
+     */
     @SuppressWarnings("StringConcatenationInLoop")
     public void createMachineCode() {
         machineCode = "";
@@ -134,6 +163,11 @@ public class Script {
         }
     }
 
+    /**
+     * used to convert a single operator into machine-micro-code language
+     *
+     * @param op optional operator
+     */
     private void OperatorToMachineCode(String op) {
         if (isNumeric(op)) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -142,8 +176,7 @@ public class Script {
             if (op.contains("#")) {
                 op = op.replace("#", "");
                 s = App.memory.getMemory(Integer.parseInt(op), 32);
-            }
-            else s = Memory.stbi(op);
+            } else s = Memory.stbi(op);
             machineCode += stringBuilder.substring(0, 32 - Memory.stbi(op).length()) + s;
         } else machineCode += "00000000000000000000000000000000";
     }
@@ -162,8 +195,12 @@ public class Script {
         return pattern.matcher(s).matches();
     }
 
+    /**
+     * @return the input correctly formatted
+     */
     @Override
     public String toString() {
-        return input;
+        if (machineCode.equals("")) return input;
+        else return input + "\n" + machineCode;
     }
 }

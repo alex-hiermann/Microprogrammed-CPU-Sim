@@ -36,30 +36,53 @@ import java.util.Set;
  */
 public class App extends Application {
 
-    //for new warning when quick opening another file
+    /**
+     * used for new warning, when the user is quick-opening another (new) file
+     */
     boolean showWarningAgain = true;
 
-    //stores the hyperlinks to compare with, so that they don't duplicate
+    /**
+     * stores the hyperlinks to compare with, so that they don't duplicate themselves
+     */
     Set<String> hyperLinks = new HashSet<>();
 
-    //the memory to save some of your executions
+    /**
+     * the memory to save information about the users input
+     */
     public static Memory memory = new Memory();
-    //the program to execute your code
+
+    /**
+     * the program to execute the users input
+     */
     public static Program program = new Program();
-    //the processor to execute the own commands
-    public static Processor processor = new Processor("8085", "3.072 MHz", 4,8);
-    //the buses to transfer the data: Processor <-> Program <-> Memory
+
+    /**
+     * the processor to execute commands
+     */
+    public static Processor processor = new Processor("8085", "3.072 MHz", 4, 8);
+
+    /**
+     * the address bus to give the processor and memory the used address for data
+     */
     public static AddressBus addressBus = new AddressBus("addressBus");
+
+    /**
+     * the data bus to transfer data between processor and memory
+     */
     public static DataBus dataBus = new DataBus("dataBus");
-    //public static ControlBus controlBus = new ControlBus("controlBus");
+
+    /**
+     * the control bus to store important information that the processor might need
+     */
+    public static ControlBus controlBus = new ControlBus("controlBus");
 
     public static void main(String[] args) {
-//        //first test with memory write and read
+//        first test with memory write and read
 //        Memory C = new Memory();
 //        C.setMemory(10, new boolean[]{true, false, false, true, false});
 //        System.out.println(C.getMemory(10, 5));
 //
-//        //testing the convert function from both file to script and also textArea to script
+//        testing the convert function from both file to script and also textArea to script
 //        Script script1 = convertToScript(Path.of("C:/Users/mrale/IdeaProjects/Microprogrammed_CPU/resources/testFiles/testFile3.txt"), new TextArea(), true);
 //        System.out.println(script1.toString());
 //
@@ -73,7 +96,7 @@ public class App extends Application {
     }
 
     /**
-     * creates the gui/javafx window
+     * creates the application with gui/javafx window
      *
      * @param primaryStage stage for you javafx application
      */
@@ -185,11 +208,11 @@ public class App extends Application {
     }
 
     /**
-     * @param stage the stage
+     * @param stage    the stage
      * @param textArea the textarea itself (if it's not a file)
      * @param flowPane the flowpane
-     * @param path path of the file (if it's a file)
-     * @param isFile true if it's a file, false if it's a textarea
+     * @param path     path of the file (if it's a file)
+     * @param isFile   true if it's a file, false if it's a textarea
      */
     public void openFile(Stage stage, TextArea textArea, FlowPane flowPane, Path path, Boolean isFile) {
         Path filePath;
@@ -224,9 +247,9 @@ public class App extends Application {
 
     /**
      * @param primaryStage the stage
-     * @param textArea the textarea itself (if it's not a file)
-     * @param flowPane the flowpane
-     * @param path path of the file (if it's a file)
+     * @param textArea     the textarea itself (if it's not a file)
+     * @param flowPane     the flowpane
+     * @param path         path of the file (if it's a file)
      */
     public void quickOpenFile(Stage primaryStage, TextArea textArea, FlowPane flowPane, Path path) {
         Stage stage = new Stage();
@@ -259,9 +282,9 @@ public class App extends Application {
     }
 
     /**
-     * @param path path of the file (if it's a file)
+     * @param path     path of the file (if it's a file)
      * @param textArea the textarea itself (if it's not a file)
-     * @param isFile true if it's a file, false if it's a textarea
+     * @param isFile   true if it's a file, false if it's a textarea
      * @return the input of the file / textarea as a script
      */
     public static Script convertToScript(Path path, TextArea textArea, boolean isFile) {

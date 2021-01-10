@@ -8,16 +8,22 @@ import java.util.Stack;
 public class Memory {
 
     /**
-     * size of the memory in bit
+     * is the size of the memory in bit
      */
     private final int size = 536870912;
 
-    private Stack<Boolean> stack = new Stack<>();
+    /**
+     * stack as a java.util.stack using Boolean
+     * used to store information temporarily
+     */
+    private final Stack<Boolean> stack = new Stack<>();
 
     /**
-     * memory itself as a boolean array
+     * memory as a boolean[]
+     * used to store multiple true's and false's
+     * useful to store and read information
      */
-    private boolean[] memory;
+    private final boolean[] memory;
 
     /**
      * default constructor for the memory
@@ -25,11 +31,11 @@ public class Memory {
      */
     public Memory() {
         stack.setSize(8388608); //1 boolean == 1 bit -> 1 MiB for Stack
-        memory = new boolean[size-stack.size()]; //(2^29 -> 64 MiB) - 1 MiB
+        memory = new boolean[size - stack.size()]; //(2^29 -> 64 MiB) - 1 MiB
     }
 
     /**
-     * set the bit at pos in memory to 1 (true)
+     * set the bit on position pos in memory to 1 (true)
      *
      * @param pos position for the bit you want to set
      */
@@ -38,7 +44,7 @@ public class Memory {
     }
 
     /**
-     * set the bit at pos in memory to 0 (false)
+     * set the bit on position pos in memory to 0 (false)
      *
      * @param pos position for the bit you want to unset
      */
@@ -47,7 +53,7 @@ public class Memory {
     }
 
     /**
-     * inverts the bit at pos (1 -> 0, 0 -> 1)
+     * inverts(/flips) the bit on position pos (1 -> 0, 0 -> 1)
      *
      * @param pos position for the bit you want to unset
      */
@@ -56,7 +62,8 @@ public class Memory {
     }
 
     /**
-     * useful to read some content out of your memory
+     * needed to read information out of your memory
+     * returns a binary string
      *
      * @param start start position for the range you want to read
      * @param range the range of the memory you want to read
@@ -72,7 +79,8 @@ public class Memory {
     }
 
     /**
-     * useful to set some content out of your memory
+     * needed to set information in your memory
+     * returns a binary string
      *
      * @param start start position for the range you want to read
      * @param input the range of the memory you want to read
@@ -113,6 +121,7 @@ public class Memory {
 
     /**
      * converts a string to a binary string
+     * returns a string which is being converted to a binary string
      *
      * @param s a binary string
      * @return a binary string
@@ -133,14 +142,18 @@ public class Memory {
     }
 
     /**
-     * @return memory
+     * get the memory itself as a boolean[]
+     *
+     * @return the memory itself as a boolean[]
      */
     public boolean[] getMemory() {
         return memory;
     }
 
     /**
-     * @return size
+     * get the size of the memory
+     *
+     * @return size of the memory
      */
     public int getSize() {
         return size;

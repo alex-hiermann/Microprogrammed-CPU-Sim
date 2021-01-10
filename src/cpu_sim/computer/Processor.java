@@ -6,13 +6,42 @@ import cpu_sim.register.Register16Bit;
 import cpu_sim.register.Register8Bit;
 import cpu_sim.ui.App;
 
+/**
+ * @author Alex Hiermann
+ */
 public class Processor {
 
+    /**
+     * name of the processor
+     * doesn't change anything of the speed of the calculations
+     */
     private String name;
+
+    /**
+     * frequency of the processor
+     * doesn't change anything of the speed of the calculations
+     */
     private String frequency;
+
+    /**
+     * a array for the different registers
+     * these are being used to store little information
+     * within the processor and to make it possible, to
+     * calculate more quickly, because of less bus transfer
+     */
     Register[][] registers;
+
+    /**
+     * shows on which command the processor is right now
+     */
     private int instructionPointer;
 
+    /**
+     * @param name       name of the processor
+     * @param frequency  frequency of the processor
+     * @param register16 how many 16bit registers you want
+     * @param register8  how many 8bit registers you want
+     */
     public Processor(String name, String frequency, int register16, int register8) {
         this.name = name;
         this.frequency = frequency;
@@ -20,6 +49,10 @@ public class Processor {
         registers = new Register[][]{new Register16Bit[register16], new Register8Bit[register8]};
     }
 
+    /**
+     * @param commandCounter shows how many commands there are to execute
+     * @return true or false if this methode was successfully executed
+     */
     public boolean executeCode(int commandCounter) {
         for (instructionPointer = 0; instructionPointer < 80 * commandCounter; instructionPointer += 80) {
             System.out.println("Durchgang " + (instructionPointer / 80 + 1));
@@ -48,26 +81,44 @@ public class Processor {
         return true;
     }
 
+    /**
+     * @return the instructionPointer
+     */
     public int getInstructionPointer() {
         return instructionPointer;
     }
 
+    /**
+     * @param instructionPointer set the value of the instructionPointer
+     */
     public void setInstructionPointer(int instructionPointer) {
         this.instructionPointer = instructionPointer;
     }
 
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name set the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return the frequency
+     */
     public String getFrequency() {
         return frequency;
     }
 
+    /**
+     * @param frequency set the value of the frequency
+     */
     public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
