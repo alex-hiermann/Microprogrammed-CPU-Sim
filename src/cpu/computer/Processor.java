@@ -81,6 +81,8 @@ public class Processor {
                 case "0000000000010100" -> new Not(App.addressBus.getBus32bit()).function();
                 case "0000000000010101" -> new Or(App.addressBus.getBus32bit(),
                         App.dataBus.getBus32bit()).function();
+                case "0000000000010110" -> new Pop(App.addressBus.getBus32bit()).function();
+                case "0000000000010111" -> new Push(App.addressBus.getBus32bit()).function();
                 case "0000000000011001" -> new Shl(App.addressBus.getBus32bit(),
                         App.dataBus.getBus32bit()).function();
                 case "0000000000011010" -> new Shr(App.addressBus.getBus32bit(),

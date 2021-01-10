@@ -16,13 +16,13 @@ public class Memory {
     /**
      * is the size for the used stack
      */
-    private final int stackSize = 8388608;
+    public final int stackSize = 8388608;
 
     /**
      * stack as a java.util.stack using Boolean
      * used to store information temporarily
      */
-    private final Stack<Boolean> stack = new Stack<>();
+    public final Stack<boolean[]> stack = new Stack<>();
 
     /**
      * memory as a boolean[]

@@ -1,12 +1,28 @@
 package cpu.command;
 
+import cpu.ui.App;
+
 /**
  * @author Alex Hiermann
  */
 public class Pop extends Command {
 
+    /**
+     * first needed operator
+     */
+    private final int op1;
+
+    /**
+     * default constructor
+     *
+     * @param op1 first needed operator
+     */
+    public Pop(int op1) {
+        this.op1 = op1;
+    }
+
     @Override
     public void function() {
-        super.function();
+        App.memory.setMemory(op1, App.memory.stack.pop());
     }
 }
