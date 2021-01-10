@@ -280,6 +280,10 @@ public class App extends Application {
         ImageView buttonImageView = new ImageView(buttonImage);
         Button stop = new Button();
         stop.setGraphic(buttonImageView);
+        stop.setOnAction(actionEvent -> {
+            memory = new Memory();
+            consoleOutput.clear();
+        });
 
         buttonImage = new Image("/buttonImages/debug.png");
         buttonImageView = new ImageView(buttonImage);
