@@ -1,19 +1,6 @@
 package cpu.computer;
 
-import cpu.command.Add;
-import cpu.command.And;
-import cpu.command.Cmp;
-import cpu.command.Dec;
-import cpu.command.Hlt;
-import cpu.command.Idiv;
-import cpu.command.Imul;
-import cpu.command.Inc;
-import cpu.command.Mov;
-import cpu.command.Neg;
-import cpu.command.Not;
-import cpu.command.Or;
-import cpu.command.Sub;
-import cpu.command.Xor;
+import cpu.command.*;
 import cpu.register.Register;
 import cpu.register.Register16Bit;
 import cpu.register.Register8Bit;
@@ -93,6 +80,10 @@ public class Processor {
                 case "0000000000010011" -> new Neg(App.addressBus.getBus32bit()).function();
                 case "0000000000010100" -> new Not(App.addressBus.getBus32bit()).function();
                 case "0000000000010101" -> new Or(App.addressBus.getBus32bit(),
+                        App.dataBus.getBus32bit()).function();
+                case "0000000000011001" -> new Shl(App.addressBus.getBus32bit(),
+                        App.dataBus.getBus32bit()).function();
+                case "0000000000011010" -> new Shr(App.addressBus.getBus32bit(),
                         App.dataBus.getBus32bit()).function();
                 case "0000000000011100" -> new Sub(App.addressBus.getBus32bit(),
                         App.dataBus.getBus32bit()).function();
