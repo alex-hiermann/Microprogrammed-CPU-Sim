@@ -21,6 +21,9 @@ public class Pop extends Command {
         this.op1 = op1;
     }
 
+    /**
+     * pops the last input from the stack and writes it into the memory
+     */
     @Override
     public void function() {
         App.memory.setMemory(op1, App.memory.stack.pop());

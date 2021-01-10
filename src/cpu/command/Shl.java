@@ -29,7 +29,7 @@ public class Shl extends Command {
     }
 
     /**
-     * adds (op1) to (number in memory at index op2) and saves the result at op2
+     * shifts the input from location (op1) by op2 into the left direction and saves it at op1
      */
     @Override
     public void function() {

@@ -20,6 +20,11 @@ public class Program {
     private static int commandCounter;
 
     /**
+     * stands for the starting value of the first address
+     */
+    private static final int STARTING_ADDRESS = 4200;
+
+    /**
      * run the program
      * first compile the script, check if everything is correctly used
      * secondly write the commands into the memory
@@ -32,7 +37,7 @@ public class Program {
                     + "\nPlease check your syntax!", false);
             return;
         }
-        commandCounter = script.input.split(";").length;
+        commandCounter = script.input.split(";").length - 1;
         if (!writeMemory()) {
             Program.stop("ERROR: There was a fatal error while "
                     + "writing the script into the memory!", false);
@@ -53,14 +58,14 @@ public class Program {
      */
     public static void stop(String error, boolean successful) {
         if (successful) {
-            System.out.println("#4200 | " + App.memory.getMemory(4200, 1 << 2 + 2 + 1) + " | int "
-                    + "value: " + Integer.parseInt(App.memory.getMemory(4200, 1 << 2 + 2 + 1), 2));
-            System.out.println("#4232 | " + App.memory.getMemory(4232, 1 << 2 + 2 + 1) + " | int "
-                    + "value: " + Integer.parseInt(App.memory.getMemory(4232, 1 << 2 + 2 + 1), 2));
-            System.out.println("#4264 | " + App.memory.getMemory(4264, 1 << 2 + 2 + 1) + " | int "
-                    + "value: " + Integer.parseInt(App.memory.getMemory(4264, 1 << 2 + 2 + 1), 2));
-            System.out.println("#4296 | " + App.memory.getMemory(4296, 1 << 2 + 2 + 1) + " | int "
-                    + "value: " + Integer.parseInt(App.memory.getMemory(4296, 1 << 2 + 2 + 1), 2));
+            StringBuilder string = new StringBuilder();
+            for (int i = STARTING_ADDRESS; i < STARTING_ADDRESS + commandCounter * (
+                    1 << 2 + 2 + 1); i += (1 << 2 + 2 + 1)) {
+                string.append("#").append(i).append(" | ").append(App.memory.getMemory(i,
+                        1 << 2 + 2 + 1)).append(" | int value: ").append(
+                        Integer.parseInt(App.memory.getMemory(i, 1 << 2 + 2 + 1), 2)).append("\n");
+            }
+            App.consoleOutput.setText(string.toString());
             return;
         }
         Alert alert = new Alert(Alert.AlertType.ERROR);

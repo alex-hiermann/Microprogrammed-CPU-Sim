@@ -9,28 +9,31 @@ import cpu.computer.Memory;
 import cpu.computer.Processor;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -41,6 +44,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -52,6 +56,16 @@ public class App extends Application {
      * used for new warning, when the user is quick-opening another (new) file
      */
     boolean showWarningAgain = true;
+
+    /**
+     * used for the console as a textArea
+     */
+    public static TextArea consoleOutput = new TextArea();
+
+    /**
+     * used for the divider Position
+     */
+    final float dividerPosition = 0.3f;
 
     /**
      * stores the hyperlinks to compare with, so that they don't duplicate themselves
@@ -123,9 +137,90 @@ public class App extends Application {
         TextArea textArea = new TextArea();
         textArea.setStyle("-fx-font-size: 14");
         textArea.setPromptText("Write you code here");
+        textArea.getStylesheets().add(getClass().getResource(
+                "/css/darkArea.css").toExternalForm());
+        textArea.getStylesheets().add("https://fonts.googleapis.com/css2?family=Source+Code+Pro&");
+        textArea.setStyle("-fx-font-family: 'Source Code Pro', monospace; -fx-font-size: 14");
 
-        FlowPane flowPane = new FlowPane();
-        flowPane.setPadding(new Insets(1 << 2, 0, 0, (1 << 2) + 1));
+        //label for the history titled pane
+        Label historyLabel = new Label("History");
+        historyLabel.setStyle("-fx-underline: true");
+        //vBox for the history titled pane
+        VBox vBox = new VBox(historyLabel);
+        vBox.getStylesheets().add(getClass().getResource(
+                "/css/lightArea.css").toExternalForm());
+        //table for the database titled pane
+        TableView<CommandInfo> table = new TableView<>();
+        ObservableList<CommandInfo> data = FXCollections.observableArrayList(
+                new CommandInfo("add op1, op2;", "op1", "op2 + save location",
+                        "Adds op1 and op2"),
+                new CommandInfo("and op1, op2;", "op1 + save location", "op2",
+                        "Logical bitwise \"and\" with the input from "
+                                + "the location \"op1\" and \"op2\""),
+                new CommandInfo("dec op1;", "op1 + save location", "",
+                        "Decrements the input from location \"op1\""),
+                new CommandInfo("hlt;", "", "",
+                        "Stops the current Program"),
+                new CommandInfo("idiv op1, op2;", "op1", "op2 + save location",
+                        "Divides op1 with the input from location \"op2\""),
+                new CommandInfo("imul op1, op2;", "op1", "op2 + save location",
+                        "Multiplies op1 with the input from location \"op2\""),
+                new CommandInfo("inc op1;", "op1 + save location", "",
+                        "Increments the input from location \"op1\""),
+                new CommandInfo("mov op1, op2;", "op1", "op2 + save location",
+                        "Moves input from location \"op1\" to \"op2\""),
+                new CommandInfo("neg op1;", "op1 + save location", "",
+                        "Negates the input from location \"op1\""),
+                new CommandInfo("not op1;", "op1 + save location", "",
+                        "Flips all bits of the input from location \"op1\""),
+                new CommandInfo("or op1, op2;", "op1 + save location", "op2",
+                        "Logical bitwise \"or\" with the input from "
+                                + "the location \"op1\" and \"op2\""),
+                new CommandInfo("pop op1;", "op1 + save location", "",
+                        "Pops the last input from the stack and saves it at location \"op1\""),
+                new CommandInfo("push op1;", "op1", "",
+                        "Pushes the input from location \"op1\" onto the stack"),
+                new CommandInfo("shl op1, op2;", "op1 + save location", "op2",
+                        "shifts the input from location \"op1\" by op2 into the left direction"
+                                + " and saves it at op1"),
+                new CommandInfo("shr op1, op2;", "op1 + save location", "op2",
+                        "shifts the input from location \"op1\" by op2 into the right direction"
+                                + " and saves it at op1"),
+                new CommandInfo("sub op1, op2;", "op1 + save location", "op2",
+                        "subtracts op2 from op1 and saves the result at \"op2\""),
+                new CommandInfo("xor op1, op2;", "op1 + save location", "op2",
+                        "Logical bitwise \"xor\" with the input from "
+                                + "the location \"op1\" and \"op2\"")
+        );
+        table.setEditable(true);
+        table.getStylesheets().add(getClass().getResource(
+                "/css/lightArea.css").toExternalForm());
+
+
+        TableColumn commandSyntax = new TableColumn("Command Syntax");
+        commandSyntax.setCellValueFactory(new PropertyValueFactory<CommandInfo,
+                String>("commandSyntax"));
+
+        TableColumn operator1 = new TableColumn("Operator 1");
+        operator1.setCellValueFactory(new PropertyValueFactory<CommandInfo, String>("operator1"));
+
+        TableColumn operator2 = new TableColumn("Operator 2");
+        operator2.setCellValueFactory(new PropertyValueFactory<CommandInfo, String>("operator2"));
+
+        TableColumn description = new TableColumn("Description");
+        description.setCellValueFactory(new PropertyValueFactory<CommandInfo,
+                String>("description"));
+
+        table.setItems(data);
+        table.getColumns().addAll(commandSyntax, operator1, operator2, description);
+
+        //left pane with a database containing all possible commands on the top
+        TitledPane database = new TitledPane("Database", table);
+        //and a history of the last recent opened files below
+        TitledPane history = new TitledPane("Recent Files", new Label("-- - Empty - --"));
+        //both titled panes are stored in the following vbox
+        VBox leftBox = new VBox(database, history);
+        leftBox.setStyle("-fx-background-color: #a3a3a3");
 
 
         //menu for the top of the window
@@ -134,8 +229,10 @@ public class App extends Application {
         //menu 1: File -> Open, Save, Close
         Menu menu1 = new Menu("File");
         MenuItem open = new Menu("Open");
-        open.setOnAction(actionEvent -> openFile(primaryStage, textArea, flowPane, Path.of("")
-                , false));
+        open.setOnAction(actionEvent -> {
+            openFile(primaryStage, textArea, vBox, Path.of(""), false);
+            history.setContent(vBox);
+        });
 
         MenuItem save = new Menu("Save");
         save.setOnAction(actionEvent -> {
@@ -178,7 +275,6 @@ public class App extends Application {
 
         menuBar.getMenus().addAll(menu1, menu2, menu3);
 
-
         //the buttons on the top right to start, stop or debug
         Image buttonImage = new Image("/buttonImages/stop.png");
         ImageView buttonImageView = new ImageView(buttonImage);
@@ -205,29 +301,40 @@ public class App extends Application {
 
         HBox.setHgrow(region, Priority.ALWAYS);
         HBox header = new HBox(menuBar, region, hBoxButtons);
-        SubScene subScene = new SubScene(header, Screen.getPrimary().getBounds().getWidth(), 24);
+        header.getStylesheets().add(getClass().getResource(
+                "/css/lightArea.css").toExternalForm());
 
 
         //splitPane for the "main screen"
-        SplitPane splitPane = new SplitPane(flowPane, textArea);
-        splitPane.setDividerPositions(0.2);
-        SubScene subScene1 = new SubScene(splitPane, Screen.getPrimary().getBounds().getWidth(),
-                Screen.getPrimary().getBounds().getHeight() - 200);
+        SplitPane splitPane = new SplitPane(leftBox, textArea);
+        splitPane.setOrientation(Orientation.HORIZONTAL);
+        splitPane.setDividerPositions(dividerPosition, 1);
 
-        VBox fullScene = new VBox();
-        fullScene.getChildren().addAll(subScene, subScene1);
-        primaryStage.setScene(new Scene(fullScene));
+        consoleOutput.getStylesheets().add(getClass().getResource(
+                "/css/darkArea.css").toExternalForm());
+        consoleOutput.getStylesheets().add("https://fonts.googleapis.com/css2?family=Source+Code+Pro&");
+        consoleOutput.setStyle("-fx-font-family: 'Source Code Pro', monospace; -fx-font-size: 14");
+
+        SplitPane fullscreen = new SplitPane(splitPane, consoleOutput);
+        fullscreen.setOrientation(Orientation.VERTICAL);
+        fullscreen.prefHeightProperty().bind(primaryStage.widthProperty().multiply(0.80));
+        fullscreen.setDividerPositions(0.9);
+
+        primaryStage.setHeight(1080);
+        primaryStage.setWidth(1920);
+
+        primaryStage.setScene(new Scene(new VBox(header, fullscreen)));
         primaryStage.show();
     }
 
     /**
      * @param stage    the stage
      * @param textArea the textarea itself (if it's not a file)
-     * @param flowPane the flowpane
+     * @param vBox     the flowPane
      * @param path     path of the file (if it's a file)
      * @param isFile   true if it's a file, false if it's a textarea
      */
-    public void openFile(Stage stage, TextArea textArea, FlowPane flowPane, Path path,
+    public void openFile(Stage stage, TextArea textArea, VBox vBox, Path path,
                          Boolean isFile) {
         Path filePath;
         if (!isFile) {
@@ -250,50 +357,46 @@ public class App extends Application {
 
         Hyperlink hyperlink = new Hyperlink(filePath.toString());
         hyperlink.setOnAction(event -> {
-            if (showWarningAgain) quickOpenFile(stage, textArea, flowPane, filePath);
-            else openFile(stage, textArea, flowPane, filePath, true);
+            if (showWarningAgain) quickOpenFile(stage, textArea, vBox, filePath);
+            else openFile(stage, textArea, vBox, filePath, true);
         });
         if (!hyperLinks.contains(filePath.toString())) {
             hyperLinks.add(filePath.toString());
-            flowPane.getChildren().add(hyperlink);
+            vBox.getChildren().add(hyperlink);
         }
     }
 
     /**
      * @param primaryStage the stage
      * @param textArea     the textarea itself (if it's not a file)
-     * @param flowPane     the flowpane
+     * @param vBox         the flowPane
      * @param path         path of the file (if it's a file)
      */
-    public void quickOpenFile(Stage primaryStage, TextArea textArea, FlowPane flowPane, Path path) {
-        Stage stage = new Stage();
-        stage.setTitle("Quick-Open File");
-        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/icon2.png")));
-        stage.setResizable(false);
-        stage.setWidth(280);
-        stage.setHeight(120);
+    public void quickOpenFile(Stage primaryStage, TextArea textArea, VBox vBox, Path path) {
+        if (showWarningAgain) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Quick-Open File");
+            alert.setResizable(false);
+            alert.setHeaderText("Warning: Please be aware of the following");
+            alert.setContentText("If you open a new File, be sure, "
+                    + "that you have already saved your old script!");
 
-        Label warning = new Label("WARNING: If you open a new File, be sure, "
-                + "\n that you have already saved your old script.");
-
-        Button goAhead = new Button("Go ahead");
-        goAhead.setOnAction(actionEvent -> {
-            openFile(primaryStage, textArea, flowPane, path, true);
-            stage.close();
-        });
-
-        Button cancel = new Button("Cancel");
-        cancel.setOnAction(actionEvent -> stage.close());
-
-        CheckBox stopReminding = new CheckBox("Don't remind me again");
-        stopReminding.setOnAction(actionEvent -> showWarningAgain = false);
-
-        VBox vBox = new VBox(warning);
-        vBox.getChildren().addAll(goAhead, cancel, stopReminding);
-        Scene scene = new Scene(vBox);
-
-        stage.setScene(scene);
-        stage.show();
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isEmpty()) {
+                //alert was closed, no button has been pressed.
+                showWarningAgain = false;
+                openFile(primaryStage, textArea, vBox, path, true);
+                alert.close();
+            } else if (result.get() == ButtonType.OK) {
+                //"ok"-button is pressed
+                showWarningAgain = false;
+                openFile(primaryStage, textArea, vBox, path, true);
+                alert.close();
+            } else if (result.get() == ButtonType.CANCEL) {
+                //"cancel"-button is pressed
+                alert.close();
+            }
+        } else openFile(primaryStage, textArea, vBox, path, true);
     }
 
     /**

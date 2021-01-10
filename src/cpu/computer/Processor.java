@@ -1,6 +1,23 @@
 package cpu.computer;
 
-import cpu.command.*;
+import cpu.command.Add;
+import cpu.command.And;
+import cpu.command.Cmp;
+import cpu.command.Dec;
+import cpu.command.Hlt;
+import cpu.command.Idiv;
+import cpu.command.Imul;
+import cpu.command.Inc;
+import cpu.command.Mov;
+import cpu.command.Neg;
+import cpu.command.Not;
+import cpu.command.Or;
+import cpu.command.Pop;
+import cpu.command.Push;
+import cpu.command.Shl;
+import cpu.command.Shr;
+import cpu.command.Sub;
+import cpu.command.Xor;
 import cpu.register.Register;
 import cpu.register.Register16Bit;
 import cpu.register.Register8Bit;
@@ -37,6 +54,11 @@ public class Processor {
     private int instructionPointer;
 
     /**
+     * length of a command
+     */
+    public final int commandLength = 80;
+
+    /**
      * @param name       name of the processor
      * @param frequency  frequency of the processor
      * @param register16 how many 16bit registers you want
@@ -54,12 +76,13 @@ public class Processor {
      * @return true or false if this methode was successfully executed
      */
     public boolean executeCode(int commandCounter) {
-        for (instructionPointer = 0; instructionPointer < 80 * commandCounter;
-             instructionPointer += 80) {
-            System.out.println("Durchgang " + (instructionPointer / 80 + 1));
-            String command = App.memory.getMemory(instructionPointer, 16);
-            String address = App.memory.getMemory(instructionPointer + 16, 32); //op1
-            String data = App.memory.getMemory(instructionPointer + 48, 32); //op2
+        for (instructionPointer = 0; instructionPointer < commandLength * commandCounter;
+             instructionPointer += commandLength) {
+            String command = App.memory.getMemory(instructionPointer, ((1 << 2) << 2));
+            String address = App.memory.getMemory(instructionPointer + ((1 << 2) << 2), (
+                    1 << 2 + 2 + 1)); //op1
+            String data = App.memory.getMemory(instructionPointer + (((1 << 2) << 2) + (
+                    1 << 2 + 2 + 1)), (1 << 2 + 2 + 1)); //op2
 
             App.addressBus.setBus32bit(Integer.parseInt(address, 2));
             App.dataBus.setBus32bit(Integer.parseInt(data, 2));
