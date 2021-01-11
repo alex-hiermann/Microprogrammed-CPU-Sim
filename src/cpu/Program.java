@@ -43,7 +43,9 @@ public class Program {
                     + "writing the script into the memory!", false);
             return;
         }
-        if (!startProcessor()) {
+        try {
+            startProcessor();
+        } catch (NumberFormatException n) {
             Program.stop("ERROR: There was a runtime error while executing the script!", false);
         }
         Program.stop("", true);
@@ -59,11 +61,16 @@ public class Program {
     public static void stop(String error, boolean successful) {
         if (successful) {
             StringBuilder string = new StringBuilder();
-            for (int i = STARTING_ADDRESS; i < STARTING_ADDRESS + commandCounter * (
-                    1 << 2 + 2 + 1); i += (1 << 2 + 2 + 1)) {
-                string.append("#").append(i).append(" | ").append(App.memory.getMemory(i,
-                        1 << 2 + 2 + 1)).append(" | int value: ").append(
-                        Integer.parseInt(App.memory.getMemory(i, 1 << 2 + 2 + 1), 2)).append("\n");
+            try {
+                for (int i = STARTING_ADDRESS; i < STARTING_ADDRESS + commandCounter * (
+                        1 << 2 + 2 + 1); i += (1 << 2 + 2 + 1)) {
+                    string.append("#").append(i).append(" | ").append(App.memory.getMemory(i,
+                            1 << 2 + 2 + 1)).append(" | int value: ").append(
+                            Integer.parseInt(App.memory.getMemory(i, 1 << 2 + 2 + 1),
+                                    2)).append("\n");
+                }
+            } catch (NumberFormatException n) {
+                return;
             }
             App.consoleOutput.setText(string.toString());
             return;
